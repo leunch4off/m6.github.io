@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MEGABONK – Main Menu Mock</title>
+
+  <!-- Немного игровых шрифтов -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Changa+One&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gray-dark: #2b2b33;
+      --gray-medium: #494955;
+      --gray-light: #787887;
+      --accent-yellow: #ffd800;
+      --accent-green: #6dd46c;
+      --accent-blue: #4cc6ff;
+      --bg-top: #59b4e8;
+      --bg-bottom: #3c7ad2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Changa One", system-ui, sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      background: linear-gradient(var(--bg-top), var(--bg-bottom));
+      overflow: hidden;
+    }
+
+    /* Простая "трава" внизу */
+    body::after {
+      content: "";
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 30vh;
+      background:
+        linear-gradient(to top, #31501f 0 60%, transparent 60%),
+        repeating-linear-gradient(
+          -45deg,
+          #3f6f23,
+          #3f6f23 10px,
+          #457726 10px,
+          #457726 20px
+        );
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .menu-wrapper {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 24px 40px;
+      display: grid;
+      grid-template-columns: 260px 1fr 320px;
+      gap: 24px;
+      align-items: start;
+      height: 100vh;
+    }
+
+    /* Центр */
+
+    .center-panel {
+      text-align: center;
+      align-self: center;
+    }
+
+    .game-title {
+      margin: 0;
+      font-family: "Luckiest Guy", system-ui, sans-serif;
+      font-size: 64px;
+      letter-spacing: 4px;
+      text-shadow: 0 6px 0 #000;
+    }
+
+    .subtitle {
+      margin: 4px 0 24px;
+      font-size: 16px;
+      text-shadow: 0 3px 0 #000;
+      color: #ffeaa7;
+    }
+
+    .main-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      background: var(--gray-medium);
+      border: 3px solid #14141a;
+      border-radius: 8px;
+      padding: 10px 26px;
+      font-size: 20px;
+      text-transform: uppercase;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #14141a;
+      text-shadow: 0 2px 0 #000;
+      letter-spacing: 1px;
+      min-width: 180px;
+      transition: transform 0.05s ease, box-shadow 0.05s ease, filter 0.15s ease;
+    }
+
+    .btn span.excl {
+      color: var(--accent-yellow);
+    }
+
+    .btn:hover {
+      filter: brightness(1.1);
+    }
+
+    .btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #14141a;
+    }
+
+    /* Левая часть */
+
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      gap: 16px;
+    }
+
+    .quests-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .quest-card {
+      background: var(--gray-dark);
+      border-radius: 6px;
+      padding: 8px 10px;
+      box-shadow: 0 3px 0 #111;
+      font-size: 12px;
+    }
+
+    .quest-title {
+      font-size: 13px;
+      color: var(--accent-yellow);
+      margin-bottom: 2px;
+    }
+
+    .quest-desc {
+      opacity: 0.9;
+      margin-bottom: 4px;
+    }
+
+    .quest-progress-bar {
+      background: #25252c;
+      border-radius: 999px;
+      height: 6px;
+      overflow: hidden;
+    }
+
+    .quest-progress {
+      height: 100%;
+      width: 60%;
+      background: linear-gradient(to right, var(--accent-green), var(--accent-blue));
+    }
+
+    .quest-count {
+      font-size: 11px;
+      text-align: right;
+      margin-top: 2px;
+      opacity: 0.8;
+    }
+
+    .left-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .side-btn {
+      background: var(--gray-dark);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 3px 0 #111;
+      border: 2px solid #111;
+      cursor: pointer;
+      text-shadow: 0 2px 0 #000;
+    }
+
+    .side-btn-label {
+      flex: 1;
+    }
+
+    /* Правая часть – лидерборд */
+
+    .right-panel {
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lb-top-btn {
+      align-self: flex-end;
+      background: var(--gray-medium);
+      border-radius: 6px;
+      padding: 6px 14px;
+      border: 2px solid #111;
+      font-size: 13px;
+      box-shadow: 0 3px 0 #111;
+      cursor: pointer;
+      text-shadow: 0 2px 0 #000;
+    }
+
+    .leaderboard {
+      background: var(--gray-dark);
+      border-radius: 8px;
+      padding: 10px;
+      border: 3px solid #111;
+      box-shadow: 0 5px 0 #111;
+      font-size: 11px;
+    }
+
+    .leaderboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .leaderboard-header span.reset {
+      color: var(--accent-yellow);
+      font-size: 10px;
+    }
+
+    .leaderboard-tabs {
+      display: flex;
+      gap: 6px;
+      font-size: 10px;
+      margin-bottom: 6px;
+    }
+
+    .leaderboard-tab {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #1d1d24;
+      opacity: 0.7;
+    }
+
+    .leaderboard-tab.active {
+      background: #3e3e4a;
+      opacity: 1;
+    }
+
+    table.lb-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10px;
+    }
+
+    table.lb-table th,
+    table.lb-table td {
+      padding: 2px 3px;
+      text-align: left;
+    }
+
+    table.lb-table th {
+      border-bottom: 1px solid #555;
+      font-weight: normal;
+      color: #d9d9ff;
+    }
+
+    table.lb-table tr:nth-child(odd) td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    table.lb-table td.rank {
+      width: 32px;
+      color: #ffa;
+    }
+
+    table.lb-table td.kills {
+      text-align: right;
+    }
+
+    .current-player {
+      margin-top: 4px;
+      padding-top: 4px;
+      border-top: 1px solid #555;
+      font-size: 10px;
+      opacity: 0.8;
+    }
+
+    .version-label {
+      position: fixed;
+      right: 10px;
+      bottom: 6px;
+      font-size: 10px;
+      opacity: 0.7;
+      text-shadow: 0 2px 0 #000;
+    }
+
+    @media (max-width: 900px) {
+      .menu-wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        height: auto;
+      }
+      .center-panel {
+        order: -1;
+        margin-top: 30px;
+      }
+      body::after {
+        height: 22vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="menu-wrapper">
+    <!-- LEFT -->
+    <aside class="left-panel">
+      <div class="quests-block">
+        <div class="quest-card">
+          <div class="quest-title">Golden Sneakers</div>
+          <div class="quest-desc">Break 150 pots</div>
+          <div class="quest-progress-bar">
+            <div class="quest-progress" style="width: 96%;"></div>
+          </div>
+          <div class="quest-count">145 / 150</div>
+        </div>
+        <div class="quest-card">
+          <div class="quest-title">Weapon Slot I</div>
+          <div class="quest-desc">Complete 25 Quests</div>
+          <div class="quest-progress-bar">
+            <div class="quest-progress" style="width: 88%;"></div>
+          </div>
+          <div class="quest-count">22 / 25</div>
+        </div>
+        <div class="quest-card">
+          <div class="quest-title">Attraction Tome</div>
+          <div class="quest-desc">Use Shrine of Succ 8 times.</div>
+          <div class="quest-progress-bar">
+            <div class="quest-progress" style="width: 75%;"></div>
+          </div>
+          <div class="quest-count">6 / 8</div>
+        </div>
+        <div class="quest-card">
+          <div class="quest-title">Skip</div>
+          <div class="quest-desc">Complete 30 Quests</div>
+          <div class="quest-progress-bar">
+            <div class="quest-progress" style="width: 73%;"></div>
+          </div>
+          <div class="quest-count">22 / 30</div>
+        </div>
+      </div>
+
+      <div class="left-buttons">
+        <button class="side-btn"><span class="side-btn-label">⚙ SETTINGS</span></button>
+        <button class="side-btn"><span class="side-btn-label">🌐 English</span></button>
+        <button class="side-btn"><span class="side-btn-label">💬 Discord</span></button>
+        <button class="side-btn"><span class="side-btn-label">← EXIT</span></button>
+      </div>
+    </aside>
+
+    <!-- CENTER -->
+    <section class="center-panel">
+      <h1 class="game-title">MEGABONK</h1>
+      <p class="subtitle">megaing my bonk</p>
+
+      <div class="main-buttons">
+        <button class="btn">Play</button>
+        <button class="btn">Unlocks<span class="excl">!</span></button>
+        <button class="btn">Quests<span class="excl">!</span></button>
+        <button class="btn">Shop<span class="excl">!</span></button>
+      </div>
+    </section>
+
+    <!-- RIGHT -->
+    <aside class="right-panel">
+      <button class="lb-top-btn">All Leaderboards</button>
+
+      <div class="leaderboard">
+        <div class="leaderboard-header">
+          <span>LEADERBOARDS</span>
+          <span class="reset">Reset in 104:48:38</span>
+        </div>
+
+        <div class="leaderboard-tabs">
+          <div class="leaderboard-tab active">Global</div>
+          <div class="leaderboard-tab">Friends</div>
+        </div>
+
+        <table class="lb-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th class="kills">Kills</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="rank">#1</td><td>Santimil3l</td><td class="kills">3.7M</td></tr>
+            <tr><td class="rank">#2</td><td>BOZO</td><td class="kills">2.3M</td></tr>
+            <tr><td class="rank">#3</td><td>alex</td><td class="kills">1.6M</td></tr>
+            <tr><td class="rank">#4</td><td>SimbaTheSeer</td><td class="kills">1.6M</td></tr>
+            <tr><td class="rank">#5</td><td>monkeyaiim</td><td class="kills">1.6M</td></tr>
+            <tr><td class="rank">#6</td><td>Martyr_Dom VT</td><td class="kills">1.5M</td></tr>
+            <tr><td class="rank">#7</td><td>Sprutz</td><td class="kills">1.5M</td></tr>
+            <tr><td class="rank">#8</td><td>Impulze</td><td class="kills">1.4M</td></tr>
+            <tr><td class="rank">#9</td><td>not here</td><td class="kills">1.4M</td></tr>
+          </tbody>
+        </table>
+
+        <div class="current-player">
+          #45867 – hop3less – 3,087
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="version-label">version 1.0.7</div>
+</body>
+</html>
